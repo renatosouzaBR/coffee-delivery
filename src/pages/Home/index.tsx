@@ -1,19 +1,9 @@
-import { Coffee, Package, ShoppingCart, Timer } from 'phosphor-react'
-
 import coffeeBannerImage from '@/assets/coffee-banner.svg'
-import coffee1Image from '@/assets/coffee-1.svg'
-import { CounterInput } from '@/components/CounterInput'
+import coffeesData from '@/database/coffees.json'
 
-import {
-  CoffeeCard,
-  CoffeeDescriptions,
-  CoffeeImageContainer,
-  CoffeesContainer,
-  HomeContainer,
-  WelcomeContainer,
-} from './styles'
-
-const COFFEE_DATA = new Array(14).fill(new Date().getTime())
+import { Benefits } from './components/Benefits'
+import { CoffeesContainer, HomeContainer, WelcomeContainer } from './styles'
+import { CoffeeCard } from './components/CoffeeCard'
 
 export function Home() {
   return (
@@ -27,33 +17,10 @@ export function Home() {
           </span>
 
           <div>
-            <div>
-              <div>
-                <ShoppingCart size={16} weight="fill" />
-              </div>
-              <span>Compra simples e segura</span>
-            </div>
-
-            <div>
-              <div>
-                <Package size={16} weight="fill" />
-              </div>
-              <span>Embalagem mantém o café intacto</span>
-            </div>
-
-            <div>
-              <div>
-                <Timer size={16} weight="fill" />
-              </div>
-              <span>Entrega rápida e rastreada</span>
-            </div>
-
-            <div>
-              <div>
-                <Coffee size={16} weight="fill" />
-              </div>
-              <span>O café chega fresquinho até você</span>
-            </div>
+            <Benefits title="Compra simples e segura" icon="shoppingCart" />
+            <Benefits title="Embalagem mantém o café intacto" icon="package" />
+            <Benefits title="Entrega rápida e rastreada" icon="timer" />
+            <Benefits title="O café chega fresquinho até você" icon="coffee" />
           </div>
         </div>
 
@@ -64,28 +31,8 @@ export function Home() {
         <h2>Nossos cafés</h2>
 
         <div>
-          {COFFEE_DATA.map((coffee) => (
-            <CoffeeCard key={coffee}>
-              <CoffeeImageContainer>
-                <img src={coffee1Image} alt="" />
-                <span>Tradicional</span>
-              </CoffeeImageContainer>
-
-              <CoffeeDescriptions>
-                <h4>Expresso Tradicional</h4>
-                <span>
-                  O tradicional café feito com água quente e grãos moídos
-                </span>
-              </CoffeeDescriptions>
-
-              <footer>
-                <strong>9,90</strong>
-                <CounterInput />
-                <button>
-                  <ShoppingCart size={22} weight="fill" />
-                </button>
-              </footer>
-            </CoffeeCard>
+          {coffeesData.map((coffee) => (
+            <CoffeeCard key={coffee.id} data={coffee} />
           ))}
         </div>
       </CoffeesContainer>
