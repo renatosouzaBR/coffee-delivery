@@ -68,7 +68,7 @@ export const CoffeesContainer = styled.main`
     padding: 3.375rem 0;
 
     display: flex;
-    gap: 1.2rem;
+    gap: 2rem;
     row-gap: 2.5rem;
     flex-wrap: wrap;
   }

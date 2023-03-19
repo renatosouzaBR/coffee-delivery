@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 export const CoffeeCardContainer = styled.div`
-  width: 16rem;
+  width: 100%;
+  max-width: 18rem;
   height: 19.37rem;
   padding: 0 1.5rem 1.25rem;
   background-color: ${(props) => props.theme['base-100']};

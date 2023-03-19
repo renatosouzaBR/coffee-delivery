@@ -1,6 +1,7 @@
 import { ShoppingCart } from 'phosphor-react'
 
 import { CounterInput } from '@/components/CounterInput'
+import { formatCurrency } from '@/utils/formatters'
 import * as imagesSvg from '@/assets/coffees'
 
 import {
@@ -25,6 +26,7 @@ export function CoffeeCard({ data }: CoffeeCardProps) {
   const { title, subtitle, features, price, image } = data
   const imageIndex = Object.keys(imagesSvg).indexOf(image)
   const imageSvg = Object.values(imagesSvg)[imageIndex]
+  const formattedCurrencyToPtBR = formatCurrency(price)
 
   return (
     <CoffeeCardContainer>
@@ -44,7 +46,7 @@ export function CoffeeCard({ data }: CoffeeCardProps) {
       </CoffeeDescriptions>
 
       <footer>
-        <strong>{price}</strong>
+        <strong>{formattedCurrencyToPtBR}</strong>
         <CounterInput />
 
         <button>
