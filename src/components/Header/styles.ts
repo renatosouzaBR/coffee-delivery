@@ -38,7 +38,7 @@ export const HeaderContainer = styled.header`
       }
     }
 
-    button {
+    a {
       display: flex;
       align-items: center;
       justify-content: center;
