@@ -11,6 +11,8 @@ export const CounterInputContainar = styled.div`
   justify-content: space-between;
   gap: 0.75rem;
 
+  user-select: none;
+
   span {
     color: ${(props) => props.theme['base-900']};
   }

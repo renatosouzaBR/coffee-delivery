@@ -9,8 +9,10 @@ import {
   CoffeeDescriptions,
   CoffeeImageContainer,
 } from './styles'
+import { useState } from 'react'
 
-type Coffee = {
+export type Coffee = {
+  id: string
   title: string
   subtitle: string
   features: string[]
@@ -20,13 +22,24 @@ type Coffee = {
 
 interface CoffeeCardProps {
   data: Coffee
+  onAddToShoppingCart: (coffee: Coffee, quantity: number) => void
 }
 
-export function CoffeeCard({ data }: CoffeeCardProps) {
+export function CoffeeCard({ data, onAddToShoppingCart }: CoffeeCardProps) {
   const { title, subtitle, features, price, image } = data
   const imageIndex = Object.keys(imagesSvg).indexOf(image)
   const imageSvg = Object.values(imagesSvg)[imageIndex]
   const formattedCurrencyToPtBR = formatCurrency(price)
+
+  const [counterOfCoffee, setCounterOfCoffee] = useState(1)
+
+  function onChangeCounterCoffee(value: number) {
+    setCounterOfCoffee(value)
+  }
+
+  function handleAddToShoppingCart() {
+    onAddToShoppingCart(data, counterOfCoffee)
+  }
 
   return (
     <CoffeeCardContainer>
@@ -47,9 +60,12 @@ export function CoffeeCard({ data }: CoffeeCardProps) {
 
       <footer>
         <strong>{formattedCurrencyToPtBR}</strong>
-        <CounterInput />
+        <CounterInput
+          value={counterOfCoffee}
+          onChangeValue={onChangeCounterCoffee}
+        />
 
-        <button>
+        <button onClick={handleAddToShoppingCart}>
           <ShoppingCart size={22} weight="fill" />
         </button>
       </footer>
