@@ -39,6 +39,16 @@ export function shoppingCartReducer(state: ShoppingCartState, action: any) {
         selectedCoffees: [...state.selectedCoffees, action.payload],
       }
     }
+    case ACTIONS_TYPE.REMOVE_COFFEE_FROM_SHOPPING_CART: {
+      const selectedCoffeesWithoutRemovedCoffee = state.selectedCoffees.filter(
+        (coffee) => coffee.id !== action.payload.id,
+      )
+
+      return {
+        ...state,
+        selectedCoffees: selectedCoffeesWithoutRemovedCoffee,
+      }
+    }
     default:
       return state
   }

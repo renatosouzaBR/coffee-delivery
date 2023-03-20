@@ -8,6 +8,7 @@ import { ACTIONS_TYPE } from './ActionsTypes'
 interface ShoppingCartContextProps {
   selectedCoffees: SelectedCoffee[]
   addCoffeeToShoppingCart(coffee: Coffee, quantity: number): void
+  removeCoffeeFromShoppingCart(id: string): void
 }
 
 const ShoppingCartContext = createContext({} as ShoppingCartContextProps)
@@ -33,9 +34,22 @@ function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
     })
   }
 
+  function removeCoffeeFromShoppingCart(id: string) {
+    dispatch({
+      type: ACTIONS_TYPE.REMOVE_COFFEE_FROM_SHOPPING_CART,
+      payload: {
+        id,
+      },
+    })
+  }
+
   return (
     <ShoppingCartContext.Provider
-      value={{ selectedCoffees, addCoffeeToShoppingCart }}
+      value={{
+        selectedCoffees,
+        addCoffeeToShoppingCart,
+        removeCoffeeFromShoppingCart,
+      }}
     >
       {children}
     </ShoppingCartContext.Provider>

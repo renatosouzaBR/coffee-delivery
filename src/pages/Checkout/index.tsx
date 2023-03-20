@@ -4,13 +4,10 @@ import {
   CurrencyDollar,
   MapPinLine,
   Money,
-  Trash,
 } from 'phosphor-react'
 
-import coffeeImage from '@/assets/coffee-1.svg'
-import { CounterInput } from '@/components/CounterInput'
-
 import { Input } from './components/Input'
+import { SelectedCoffees } from './components/SelectedCoffees'
 
 import {
   AddressAndPaymentContainer,
@@ -18,8 +15,6 @@ import {
   CheckoutContainer,
   PaymentContainer,
   PaymentSelectButton,
-  SelectedCoffees,
-  SummaryOfValues,
 } from './styles'
 
 export function Checkout() {
@@ -88,53 +83,7 @@ export function Checkout() {
         </PaymentContainer>
       </AddressAndPaymentContainer>
 
-      <SelectedCoffees>
-        <header>
-          <strong>Cafés selecionados</strong>
-        </header>
-
-        <div>
-          {/* Cartão de produto */}
-          <div>
-            <img src={coffeeImage} alt="" />
-
-            <div>
-              <span>Expresso Tradicional</span>
-
-              <div>
-                <CounterInput />
-                <button>
-                  <Trash size={16} />
-                  Remover
-                </button>
-              </div>
-            </div>
-
-            <strong>R$ 9,90</strong>
-          </div>
-
-          <SummaryOfValues>
-            <table>
-              <thead>
-                <tr>
-                  <th>Total de itens</th>
-                  <th>Entrega</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>R$ 29,70</td>
-                  <td>R$ 3,50</td>
-                  <td>R$ 33,20</td>
-                </tr>
-              </tbody>
-            </table>
-          </SummaryOfValues>
-
-          <button>Confirmar pedido</button>
-        </div>
-      </SelectedCoffees>
+      <SelectedCoffees />
     </CheckoutContainer>
   )
 }
