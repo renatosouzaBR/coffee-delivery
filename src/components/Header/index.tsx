@@ -1,11 +1,19 @@
 import { MapPin, ShoppingCart } from 'phosphor-react'
 
 import logoImage from '@/assets/logo.svg'
+import { useShoppingCart } from '@/contexts/ShoppingCartContext'
 
 import { HeaderContainer } from './styles'
 import { NavLink } from 'react-router-dom'
 
 export function Header() {
+  const { selectedCoffees } = useShoppingCart()
+
+  const totalOfSelectedCoffees = selectedCoffees.reduce(
+    (accumulator, currentValue) => accumulator + currentValue.quantity,
+    0,
+  )
+
   return (
     <HeaderContainer>
       <NavLink to="/">
@@ -20,7 +28,7 @@ export function Header() {
 
         <NavLink to="/checkout">
           <ShoppingCart size={22} weight="fill" />
-          <span>3</span>
+          <span>{totalOfSelectedCoffees}</span>
         </NavLink>
       </div>
     </HeaderContainer>

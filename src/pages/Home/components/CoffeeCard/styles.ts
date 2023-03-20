@@ -1,10 +1,9 @@
 import styled from 'styled-components'
 
 export const CoffeeCardContainer = styled.div`
-  width: 100%;
-  max-width: 18rem;
+  width: 16rem;
   height: 19.37rem;
-  padding: 0 1.5rem 1.25rem;
+  padding: 0 1.2rem 1.25rem;
   background-color: ${(props) => props.theme['base-100']};
 
   border-top-left-radius: 6px;
