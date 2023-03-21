@@ -2,8 +2,13 @@ import { CurrencyDollar, MapPin, Timer } from 'phosphor-react'
 
 import deliveryImage from '@/assets/delivery.svg'
 import { PaymentDetailsContainer, PurchaseSuccessfulContainer } from './styles'
+import { useLocation } from 'react-router-dom'
 
 export function PurchaseSuccessful() {
+  const { state } = useLocation()
+
+  console.log(state)
+
   return (
     <PurchaseSuccessfulContainer>
       <h2>Uhu! Pedido confirmado</h2>
@@ -17,8 +22,11 @@ export function PurchaseSuccessful() {
             </div>
 
             <span>
-              Entrega em Rua João Daniel Martinelli, 102
-              <span>Farrapos - Porto Alegre, RS</span>
+              Entrega em {state.address.street}, {state.address.streetNumber}
+              <span>
+                {state.address.neighborhood} - {state.address.city},{' '}
+                {state.address.state}
+              </span>
             </span>
           </div>
 
@@ -40,7 +48,7 @@ export function PurchaseSuccessful() {
 
             <span>
               Pagamento na entrega
-              <span>Cartão de Crédito</span>
+              <span>{state.paymentType}</span>
             </span>
           </div>
         </PaymentDetailsContainer>

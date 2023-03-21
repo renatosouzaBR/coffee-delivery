@@ -49,7 +49,7 @@ export function SelectedCoffees() {
           </table>
         </SummaryOfValues>
 
-        <button disabled={!isAvailableToFinishPurchase}>
+        <button type="submit" disabled={!isAvailableToFinishPurchase}>
           Confirmar pedido
         </button>
       </div>

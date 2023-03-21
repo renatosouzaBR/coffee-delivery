@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-export const CheckoutContainer = styled.div`
+export const CheckoutContainer = styled.form`
   width: 100%;
   max-width: 90rem;
   padding: 2.5rem 10rem;
@@ -20,52 +20,6 @@ export const AddressAndPaymentContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-`
-
-export const AddressContainer = styled.div`
-  background-color: ${(props) => props.theme['base-100']};
-  border-radius: 6px;
-  padding: 2.5rem;
-
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-
-  header {
-    display: flex;
-    gap: 0.5rem;
-
-    svg {
-      color: ${(props) => props.theme['yellow-900']};
-    }
-
-    div {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-
-      span {
-        color: ${(props) => props.theme['base-800']};
-      }
-
-      span:last-child {
-        font-size: 0.875rem;
-        color: ${(props) => props.theme['base-700']};
-      }
-    }
-  }
-
-  form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-
-    div {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-  }
 `
 
 export const PaymentContainer = styled.div`
@@ -123,7 +77,7 @@ export const PaymentSelectButton = styled.button<PaymentSelectButtonProps>`
 
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
 
   font-size: 0.75rem;
   color: ${(props) => props.theme['base-700']};

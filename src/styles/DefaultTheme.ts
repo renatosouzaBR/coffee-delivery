@@ -16,6 +16,8 @@ export const DefaultTheme = {
   'base-200': '#EDEDED',
   'base-100': '#F3F2F2',
 
+  'red-400': '#AB222E',
+
   background: '#FAFAFA',
   white: '#FFFFFF',
 }

@@ -1,17 +1,25 @@
-import { HTMLAttributes } from 'react'
+import { forwardRef, HTMLAttributes } from 'react'
 
 import { InputContainer, InputField } from './styles'
 
 interface InputProps extends HTMLAttributes<HTMLInputElement> {
   optional?: boolean
   maxWidth?: number
+  errorMessage?: string
 }
 
-export function Input({ optional, maxWidth = 0, ...props }: InputProps) {
+// eslint-disable-next-line react/display-name
+export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  const { errorMessage, maxWidth = 0, optional, ...rest } = props
+
   return (
     <InputContainer maxWidth={maxWidth}>
-      <InputField {...props} />
-      {!!optional && <span>Opcional</span>}
+      <div>
+        <InputField ref={ref} {...rest} />
+        {!!optional && <span>Opcional</span>}
+      </div>
+
+      {errorMessage && <span>* {errorMessage}</span>}
     </InputContainer>
   )
-}
+})

@@ -1,87 +1,115 @@
-import {
-  Bank,
-  CreditCard,
-  CurrencyDollar,
-  MapPinLine,
-  Money,
-} from 'phosphor-react'
+import { useState } from 'react'
+import { Bank, CreditCard, CurrencyDollar, Money } from 'phosphor-react'
+import { FormProvider, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as zod from 'zod'
 
-import { Input } from './components/Input'
+import { useShoppingCart } from '@/contexts/ShoppingCartContext'
+
 import { SelectedCoffees } from './components/SelectedCoffees'
-
+import { AddressForm } from './components/AddressForm'
 import {
   AddressAndPaymentContainer,
-  AddressContainer,
   CheckoutContainer,
   PaymentContainer,
   PaymentSelectButton,
 } from './styles'
 
+const formSchema = zod.object({
+  postalCode: zod.string().min(8, 'Informe os 8 digitos do CEP'),
+  street: zod.string().min(5, 'Informe o nome da rua'),
+  streetNumber: zod.number().min(1, 'Informe o número'),
+  comp: zod.string().optional(),
+  neighborhood: zod.string().min(1, 'Informe o bairro'),
+  city: zod.string().min(3, 'Informe a cidade'),
+  state: zod.string().min(2, 'Informe o estado'),
+})
+
+type FormTypes = zod.infer<typeof formSchema>
+
 export function Checkout() {
+  const navigate = useNavigate()
+  const { selectedCoffees } = useShoppingCart()
+  const [paymentType, setPaymentType] = useState('Cartão de Crédito')
+  const formShippingCart = useForm<FormTypes>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      streetNumber: 0,
+    },
+  })
+
+  const { handleSubmit } = formShippingCart
+
+  function handleSelectPaymentType(type: string) {
+    setPaymentType(type)
+  }
+
+  function handleSubmitShippingForm(data: any) {
+    navigate('/purchase-successful', {
+      state: {
+        address: data,
+        paymentType,
+      },
+    })
+  }
+
   return (
-    <CheckoutContainer>
-      <AddressAndPaymentContainer>
-        <header>
-          <strong>Complete seu pedido</strong>
-        </header>
-
-        <AddressContainer>
+    <CheckoutContainer
+      action="submit"
+      onSubmit={handleSubmit(handleSubmitShippingForm)}
+    >
+      {selectedCoffees.length > 0 && (
+        <AddressAndPaymentContainer>
           <header>
-            <MapPinLine size={22} />
-
-            <div>
-              <span>Endereço de entrega</span>
-              <span>Informe o endereço onde deseja receber seu pedido</span>
-            </div>
+            <strong>Complete seu pedido</strong>
           </header>
 
-          <form action="submit">
-            <Input placeholder="CEP" maxWidth={200} />
-            <Input placeholder="Rua" />
+          <FormProvider {...formShippingCart}>
+            <AddressForm />
+          </FormProvider>
+
+          <PaymentContainer>
+            <header>
+              <CurrencyDollar size={22} />
+
+              <div>
+                <span>Pagamento</span>
+                <span>
+                  O pagamento é feito na entrega. Escolha a forma que deseja
+                  pagar
+                </span>
+              </div>
+            </header>
 
             <div>
-              <Input placeholder="Número" maxWidth={200} />
-              <Input placeholder="Complemento" optional />
+              <PaymentSelectButton
+                selected={paymentType === 'Cartão de Crédito'}
+                onClick={() => handleSelectPaymentType('Cartão de Crédito')}
+              >
+                <CreditCard size={16} />
+                Cartão de Crédito
+              </PaymentSelectButton>
+
+              <PaymentSelectButton
+                selected={paymentType === 'Cartão de Débito'}
+                onClick={() => handleSelectPaymentType('Cartão de Débito')}
+              >
+                <Bank size={16} />
+                Cartão de Débito
+              </PaymentSelectButton>
+
+              <PaymentSelectButton
+                selected={paymentType === 'Dinheiro'}
+                onClick={() => handleSelectPaymentType('Dinheiro')}
+              >
+                <Money size={16} />
+                Dinheiro
+              </PaymentSelectButton>
             </div>
-
-            <div>
-              <Input placeholder="Bairro" maxWidth={200} />
-              <Input placeholder="Cidade" />
-              <Input placeholder="UF" maxWidth={60} />
-            </div>
-          </form>
-        </AddressContainer>
-
-        <PaymentContainer>
-          <header>
-            <CurrencyDollar size={22} />
-
-            <div>
-              <span>Pagamento</span>
-              <span>
-                O pagamento é feito na entrega. Escolha a forma que deseja pagar
-              </span>
-            </div>
-          </header>
-
-          <div>
-            <PaymentSelectButton>
-              <CreditCard size={16} />
-              Cartão de Crédito
-            </PaymentSelectButton>
-
-            <PaymentSelectButton selected>
-              <Bank size={16} />
-              Cartão de Débito
-            </PaymentSelectButton>
-
-            <PaymentSelectButton>
-              <Money size={16} />
-              Dinheiro
-            </PaymentSelectButton>
-          </div>
-        </PaymentContainer>
-      </AddressAndPaymentContainer>
+          </PaymentContainer>
+        </AddressAndPaymentContainer>
+      )}
 
       <SelectedCoffees />
     </CheckoutContainer>

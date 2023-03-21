@@ -1,4 +1,10 @@
-import { createContext, ReactNode, useContext, useReducer } from 'react'
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useReducer,
+} from 'react'
 
 import { Coffee } from '@/pages/Home/components/CoffeeCard'
 
@@ -18,9 +24,23 @@ interface ShoppingCartProviderProps {
 }
 
 function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
-  const [shoppingCartState, dispatch] = useReducer(shoppingCartReducer, {
-    selectedCoffees: [],
-  })
+  const [shoppingCartState, dispatch] = useReducer(
+    shoppingCartReducer,
+    {
+      selectedCoffees: [],
+    },
+    (initialState) => {
+      const storagedShoppingCart = localStorage.getItem(
+        '@coffeedelivery:shoppingcart',
+      )
+
+      if (storagedShoppingCart) {
+        return JSON.parse(storagedShoppingCart)
+      }
+
+      return initialState
+    },
+  )
 
   const { selectedCoffees } = shoppingCartState
 
@@ -42,6 +62,11 @@ function ShoppingCartProvider({ children }: ShoppingCartProviderProps) {
       },
     })
   }
+
+  useEffect(() => {
+    const jsonShoppingCartState = JSON.stringify(shoppingCartState)
+    localStorage.setItem('@coffeedelivery:shoppingcart', jsonShoppingCartState)
+  }, [shoppingCartState])
 
   return (
     <ShoppingCartContext.Provider

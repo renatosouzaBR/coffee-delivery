@@ -6,24 +6,39 @@ interface InputContainerProps {
 
 export const InputContainer = styled.div<InputContainerProps>`
   width: 100%;
-  height: 2.625rem;
-  padding: 0 0.75rem;
-  border-radius: 4px;
-  border: 1px solid ${(props) => props.theme['base-300']};
-  background-color: ${(props) => props.theme['base-200']};
-
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  flex-direction: column;
+  align-items: flex-start;
 
-  span {
+  & > span {
+    width: 100%;
     font-size: 0.75rem;
-    color: ${(props) => props.theme['base-600']};
-    font-style: italic;
+    margin-top: 0.3rem;
+    padding-left: 0.3rem;
+    color: ${(props) => props.theme['red-400']};
   }
 
-  :focus-within {
-    box-shadow: 0 0 0 1px ${(props) => props.theme['yellow-400']};
+  & > div {
+    width: 100%;
+    height: 2.625rem;
+    padding: 0 0.75rem;
+    border-radius: 4px;
+    border: 1px solid ${(props) => props.theme['base-300']};
+    background-color: ${(props) => props.theme['base-200']};
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    span {
+      font-size: 0.75rem;
+      color: ${(props) => props.theme['base-600']};
+      font-style: italic;
+    }
+
+    :focus-within {
+      box-shadow: 0 0 0 1px ${(props) => props.theme['yellow-400']};
+    }
   }
 
   ${({ maxWidth }) =>
